@@ -1,0 +1,16 @@
+[
+  {
+    "Date": "2025-06-12T22:38:24.1736582+01:00",
+    "Description": "McDonalds",
+    "Category": "lazer",
+    "Amount": 14.45,
+    "IsIncome": false
+  },
+  {
+    "Date": "2025-06-12T22:38:35.2919251+01:00",
+    "Description": "Mesada",
+    "Category": "ASal\u00E1rio",
+    "Amount": 100,
+    "IsIncome": true
+  }
+]

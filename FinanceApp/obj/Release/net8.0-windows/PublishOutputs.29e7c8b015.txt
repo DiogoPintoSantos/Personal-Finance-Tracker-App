@@ -1,0 +1,6 @@
+C:\Users\dpsdi\OneDrive\Documentos\GitHub\Personal-Finance-Tracker-App\FinanceApp.exe
+C:\Users\dpsdi\OneDrive\Documentos\GitHub\Personal-Finance-Tracker-App\FinanceApp.dll
+C:\Users\dpsdi\OneDrive\Documentos\GitHub\Personal-Finance-Tracker-App\FinanceApp.deps.json
+C:\Users\dpsdi\OneDrive\Documentos\GitHub\Personal-Finance-Tracker-App\FinanceApp.runtimeconfig.json
+C:\Users\dpsdi\OneDrive\Documentos\GitHub\Personal-Finance-Tracker-App\FinanceApp.dll.config
+C:\Users\dpsdi\OneDrive\Documentos\GitHub\Personal-Finance-Tracker-App\FinanceApp.pdb

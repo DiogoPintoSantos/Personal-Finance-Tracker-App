@@ -1,0 +1,44 @@
+[
+  {
+    "Date": "2025-06-12T22:26:55.389567+01:00",
+    "Description": "100",
+    "Category": "ASal\u00E1rio",
+    "Amount": 20,
+    "IsIncome": false
+  },
+  {
+    "Date": "2025-06-12T22:28:02.9095046+01:00",
+    "Description": "100",
+    "Category": "lazer",
+    "Amount": 100,
+    "IsIncome": false
+  },
+  {
+    "Date": "2025-06-12T22:28:16.2926213+01:00",
+    "Description": "100",
+    "Category": "Outros",
+    "Amount": 120,
+    "IsIncome": false
+  },
+  {
+    "Date": "2025-06-12T22:28:31.4532231+01:00",
+    "Description": "400",
+    "Category": "ASal\u00E1rio",
+    "Amount": 1,
+    "IsIncome": false
+  },
+  {
+    "Date": "2025-06-12T22:28:49.4367198+01:00",
+    "Description": "400",
+    "Category": "Transporte",
+    "Amount": 2,
+    "IsIncome": false
+  },
+  {
+    "Date": "2025-06-12T22:30:23.5521578+01:00",
+    "Description": "Lutaria",
+    "Category": "lazer",
+    "Amount": 2000,
+    "IsIncome": true
+  }
+]
