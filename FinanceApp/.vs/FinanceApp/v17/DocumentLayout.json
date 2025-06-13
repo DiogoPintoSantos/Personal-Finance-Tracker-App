@@ -48,7 +48,7 @@
               "RelativeDocumentMoniker": "Form1.cs",
               "ToolTip": "C:\\Users\\dpsdi\\OneDrive\\Documentos\\GitHub\\Personal-Finance-Tracker-App\\FinanceApp\\Form1.cs",
               "RelativeToolTip": "Form1.cs",
-              "ViewState": "AgIAADcAAAAAAAAAAAAcwBwAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAEIAAAAAAAAAAAAowFEAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-12T17:37:07.044Z",
               "EditorCaption": ""
@@ -63,7 +63,8 @@
               "RelativeToolTip": "Transaction.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-12T17:54:56.289Z"
+              "WhenOpened": "2025-06-12T17:54:56.289Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",

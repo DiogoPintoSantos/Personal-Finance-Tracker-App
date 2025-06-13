@@ -1,48 +1,104 @@
 using System.Transactions;
 using System.Text.Json;
 using System.Drawing.Text;
+using System.ComponentModel;
 namespace FinanceApp
 {
 
     public partial class Form1 : Form
     {
-        private List<Transaction> transactions = new();
+        private BindingList<Transaction> transactions = new();
         private string filePath = "transaction.json";
         public Form1()
         {
             
-        InitializeComponent();
-    
+            InitializeComponent();
+            lblBalance.Font = new Font("Segoe UI", 14, FontStyle.Bold);
+            lblTotalIncome.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+            lblTotalExpense.Font = new Font("Segoe UI", 10, FontStyle.Bold);
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            cmbCategory.Items.AddRange(new string[] { "ASalário", "Alimentação", "Transporte", "lazer", "Outros" });
+            dgvTransactions.EnableHeadersVisualStyles = false;
+            dgvTransactions.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGray;
+            dgvTransactions.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+            dgvTransactions.DefaultCellStyle.Font = new Font("Segoe UI", 10);
+            dgvTransactions.DefaultCellStyle.SelectionBackColor = Color.LightBlue;
+            dgvTransactions.DefaultCellStyle.SelectionForeColor = Color.Black;
+            dgvTransactions.RowTemplate.Height = 30;
+            dgvTransactions.AutoGenerateColumns = false;
+            //Indice
+            dgvTransactions.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                HeaderText = "#",
+                ReadOnly = true,
+                Name = "Index"
+            });
+            //Date 
+            dgvTransactions.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "Date",
+                HeaderText = "Date"
+            });
+
+            //Description
+            dgvTransactions.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "Description",
+                HeaderText = "Description"
+            });
+
+            //Category
+            dgvTransactions.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "Category",
+                HeaderText = "Categoria"
+            });
+
+            // Coluna Valor
+            dgvTransactions.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "Amount",
+                HeaderText = "Valor"
+            });
+            //Type
+            var tipoColumn = new DataGridViewComboBoxColumn
+            {
+                DataPropertyName = "IsIncome",
+                HeaderText = "Type",
+                DisplayStyle = DataGridViewComboBoxDisplayStyle.DropDownButton,
+                ValueType = typeof(bool),
+            };
+           
+
+            tipoColumn.DataSource = new[]
+            {
+                new { Text = "Receita", Value = true },
+                new { Text = "Despesa", Value = false }
+            };
+            tipoColumn.DisplayMember = "Text";
+            tipoColumn.ValueMember = "Value";
+            dgvTransactions.Columns.Add(tipoColumn);
+
 
             if (File.Exists(filePath))
             {
                 var json = File.ReadAllText(filePath);
-                transactions = JsonSerializer.Deserialize<List<Transaction>>(json);
+                transactions = JsonSerializer.Deserialize<BindingList<Transaction>>(json);
             }
-            UpdateGrid();
-            UpdateDashboard();
+            dgvTransactions.DataSource = transactions;
+            transactions.ListChanged += (s, eArgs) => AtualizarIndices();
+            AtualizarIndices();
+            // Listen for changes
+            dgvTransactions.CellValueChanged += DgvTransactions_CellValueChanged;
+            dgvTransactions.UserDeletedRow += DgvTransactions_UserDeleteRow;
+            dgvTransactions.RowsAdded += (s, eArgs) => AtualizarIndices();
         }
         private void SaveToFile()
         {
             var json = JsonSerializer.Serialize(transactions, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(filePath, json);
-        }
-        private void UpdateGrid()
-        {
-            dgvTransactions.DataSource = null;
-            dgvTransactions.DataSource = transactions.Select(t => new
-            {
-                Data = t.Date.ToString("dd/MM/yyyy"),
-                t.Description,
-                t.Category,
-                Valor = t.Amount.ToString("C"),
-                Tipo = t.IsIncome ? "Receita" : "Despesa"
-            }).ToList();
         }
         private void UpdateDashboard()
         {
@@ -56,41 +112,37 @@ namespace FinanceApp
 
             lblBalance.ForeColor = balance >= 0 ? Color.Green : Color.Red;
         }
-        private void buttonAdd_Click(object sender, EventArgs e)
+
+
+
+        private void DgvTransactions_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtDescription.Text) ||
-                string.IsNullOrWhiteSpace(txtAmount.Text) ||
-                cmbCategory.SelectedItem == null)
-            {
-                MessageBox.Show("Por favor, preencha todos os campos.");
-                return;
-            }
-
-            if (!decimal.TryParse(txtAmount.Text, out decimal amount))
-            {
-                MessageBox.Show("Valor inválido.");
-                return;
-            }
-
-            var transaction = new Transaction
-            {
-                Description = txtDescription.Text,
-                Category = cmbCategory.SelectedItem.ToString(),
-                Amount = amount,
-                IsIncome = chkIsIncome.Checked
-            };
-
-            transactions.Add(transaction);
             SaveToFile();
-            UpdateGrid();
             UpdateDashboard();
-
-            // Limpar campos
-            txtDescription.Text = "";
-            txtAmount.Text = "";
-            cmbCategory.SelectedIndex = -1;
-            chkIsIncome.Checked = false;
+            AtualizarIndices();
+        }
+        private void DgvTransactions_UserDeleteRow(object sender, DataGridViewRowEventArgs e)
+        {
+            SaveToFile();
+            UpdateDashboard();
+            AtualizarIndices();
         }
 
-    } }
+        private void AtualizarIndices()
+        {
+            for (int i = 0; i < dgvTransactions.Rows.Count; i++)
+            {
+                if (!dgvTransactions.Rows[i].IsNewRow)
+                {
+
+
+                    dgvTransactions.Rows[i].Cells["Index"].Value = i + 1;
+                }
+            }
+        }
+    }
+}
+
+
+
 
